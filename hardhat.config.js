@@ -1,5 +1,7 @@
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
+require('hardhat-deploy');
+require("hardhat-gas-reporter")
 
 const localhosturi = process.env.LOCALHOST_URI;
 const privateKey = process.env.GOERLI_PRIVATE_KEY;
@@ -22,9 +24,9 @@ module.exports = {
   },
   gasReporter: {
     enabled: true,
-    currency: "USD",
+    currency: "GBP",
     coinmarketcap: coinmarketcapKey,
-    outputFile: "gasReport.txt",
     noColors: true,
+    outputFile: "gas-report.txt",
   },
 };
