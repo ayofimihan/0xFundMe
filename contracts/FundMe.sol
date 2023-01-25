@@ -18,13 +18,15 @@ contract FundMe {
     mapping(address => uint256) public funderToAmount;
     //use immutable on a constructor variable name that doesn't change.
     address public immutable i_owner;
+    AggregatorV3Interface public priceFeed;
 
     //constructor to set the owner when deploying the contract. the "i_" shows immutability which is on the variable name during declaration.
-    constructor() {
+    constructor(address priceFeedAddress) {
         i_owner = msg.sender;
+        priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
-    //a modifier that checks to make sure the person about to call a function is the owner of the contract
+    //a modi fier that checks to make sure the person about to call a function is the owner of the contract
     modifier onlyOwner() {
         require(i_owner == msg.sender, "you're not the owner dawg");
         _;
@@ -33,8 +35,8 @@ contract FundMe {
     //function to fund the contract
     function fund() public payable {
         require(
-            msg.value.getConversionRate() >= MINIMUM_USD,
-            "get your money up "
+            msg.value.getConversionRate(priceFeed) >= MINIMUM_USD,
+            "get your money up"
         );
         funders.push(msg.sender);
         funderToAmount[msg.sender] = msg.value;
