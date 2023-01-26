@@ -12,6 +12,6 @@ if (developmentChains.includes(chainID)) {
   const mockContract = await deploy("mockV3Aggregator", {
     from: deployer,
     args: [],
-    log: true,
+    log: false,
   });
 }
