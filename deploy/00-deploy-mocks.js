@@ -1,17 +1,26 @@
-// const { network } = require("hardhat");
-const { developmentChains } = require("../helper-hardhat-config");
+const { network } = require("hardhat");
+const {
+  developmentChains,
+  DECIMALS,
+  INITIAL_ANSWER,
+} = require("../helper-hardhat-config");
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = getNamedAccounts;
-  const chainID = network.config.chainId;
+  const networkName = network.name;
+  console.log(networkName);
+
+  if (developmentChains.includes(networkName)) {
+    log("local network detected, deploying mocks...");
+    const mockContract = await deploy("mockV3Aggregator", {
+      from: deployer,
+      args: [DECIMALS, INITIAL_ANSWER],
+      log: true,
+    });
+    log("Mocks Deployed!");
+    log("--_--_--_--_--_--_--_--_--_--_--_--_--_--");
+  }
 };
 
-if (developmentChains.includes(chainID)) {
-    log("local network detected, deploying mocks...")
-  const mockContract = await deploy("mockV3Aggregator", {
-    from: deployer,
-    args: [],
-    log: false,
-  });
-}
+module.exports.tags = ["all","mocks"]
