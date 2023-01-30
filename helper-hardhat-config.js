@@ -9,13 +9,12 @@ const networkConfig = {
   },
 };
 
-const developmentChains = ["localhost", "goerli", ""];
+const developmentChains = ["localhost", "goerli"];
 const DECIMALS = 8;
 const INITIAL_ANSWER = 200000000000;
 module.exports = {
   networkConfig,
   developmentChains,
   DECIMALS,
-  INITIAL_ANSWER
-
+  INITIAL_ANSWER,
 };

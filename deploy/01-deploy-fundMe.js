@@ -35,3 +35,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   });
   console.log(` Contract successfully deployed to ${fundMeContract.address}`);
 };
+
